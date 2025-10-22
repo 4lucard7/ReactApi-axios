@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../Context";
 import UserComments from './PostComments';
+import AddPost from './AddPost';
 
 export default function UserPosts() {
   const [posts, setPosts] = useState([]);
@@ -21,9 +22,16 @@ export default function UserPosts() {
     }
   }, [userId]);
 
+  const handlePostAdded = (newPost) => {
+    setPosts([newPost, ...posts]);
+  };
+
   return (
     <>
-      <h1>Posts List (User {userId})</h1>
+      <h1>Posts de l'utilisateur {userId}</h1>
+      
+      <AddPost onPostAdded={handlePostAdded} />
+      
       <ul>
         {posts.map((post) => (
           <li key={post.id} style={{ marginBottom: "16px" }}>
